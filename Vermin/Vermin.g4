@@ -2,8 +2,18 @@ grammar Vermin;
 
 // Parser rules
 
-var		: 'var' ID				# OnVarNew
-		| 'var' ID '=' expr		# OnVarNewAssign
+var		: 'var' ID								# OnVarNew
+		| 'var' ID '=' expr						# OnVarNewAssign
+		;
+
+funcdef	: 'func' ID '(' args? ')' sbody			# OnFuncDef
+		;
+
+args	: ID (','  ID)*							# OnArgsDef
+		;
+
+return	: RETURN expr							# OnReturnExpr
+		| RETURN								# OnReturn
 		;
 
 const	: STRING		# OnString
@@ -25,11 +35,14 @@ expr	: const											# OnConst
 		;
 
 body	: var
+		| funcdef
 		| expr
 		| sbody
+		| return
 		;
 
-sbody	: '{' body* '}' ;
+sbody	: '{' body* '}'		# OnScope
+		;
 prog	: body* ;
 
 
@@ -37,7 +50,9 @@ prog	: body* ;
 fragment ESC: '\\' ('"' | 'n' | 'r');
 STRING	: '"' (ESC | ~('\n'|'\r'))*? '"';
 NUMBER	: (([0-9]+ ('.' [0-9]+)?) | ('.' [0-9]+)) ([eE] [+-]? [0-9]+)? ;
+
 NULL	: 'null' ;
+RETURN	: 'return' ;
 
 
 
