@@ -2,11 +2,11 @@ grammar Vermin;
 
 // Parser rules
 
-var		: 'var' ID								# OnVarNew
-		| 'var' ID '=' expr						# OnVarNewAssign
+var		: VAR ID								# OnVarNew
+		| VAR ID '=' expr						# OnVarNewAssign
 		;
 
-funcdef	: 'func' ID '(' args? ')' sbody			# OnFuncDef
+funcdef	: EXTERN? FUNC ID '(' args? ')' sbody?	# OnFuncDef
 		;
 
 args	: ID (','  ID)*							# OnArgsDef
@@ -34,16 +34,11 @@ expr	: const											# OnConst
 		| '(' expr ')'									# OnParen
 		;
 
-body	: var
-		| funcdef
-		| expr
-		| sbody
-		| return
-		;
+body	: (var|funcdef|expr|sbody|return)* ;
 
-sbody	: '{' body* '}'		# OnScope
+sbody	: '{' body '}'		# OnScope
 		;
-prog	: body* ;
+prog	: body ;
 
 
 // Lexer rules
@@ -53,11 +48,13 @@ NUMBER	: (([0-9]+ ('.' [0-9]+)?) | ('.' [0-9]+)) ([eE] [+-]? [0-9]+)? ;
 
 NULL	: 'null' ;
 RETURN	: 'return' ;
-
+EXTERN	: 'extern' ;
+VAR		: 'var' ;
+FUNC	: 'func' ;
 
 
 ID		: [_a-zA-Z]+[_a-zA-Z0-9]* ;
 
 
-WS	: (' '|'\r'|'\n'|'\t') -> channel(HIDDEN)
+WS	: (' '|'\r'|'\n'|'\t'|'//' .*? '\n'|'/*' .*? '*/') -> channel(HIDDEN)
 	;

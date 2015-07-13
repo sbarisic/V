@@ -8,48 +8,28 @@ using System.Runtime.InteropServices;
 
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using LLVMSharp;
 
 namespace Vermin {
 	public class Runtime {
-		internal CodeGen Gen;
+		VerminVisitor V;
+		bool Dump;
 
-		public Runtime(string Name) {
-			Gen = new CodeGen(Name);
+		public Runtime(string Name, bool Dump = false) {
+			this.Dump = Dump;
+			V = new VerminVisitor(Name);
 		}
 
-		public void SetFunction<T>(T Fn) where T : class {
-			IntPtr FnPtr = Marshal.GetFunctionPointerForDelegate(Fn as Delegate);
-		}
-
-		public T GetFunction<T>(string Name) where T : class {
-			return Marshal.GetDelegateForFunctionPointer(Gen.GetPointerToFunc(Name), typeof(T)) as T;
-		}
-	}
-
-	public class Compiler {
-		Runtime R;
-
-		public Compiler(Runtime R) {
-			this.R = R;
-		}
-
-		public void Compile(string Src, bool Dump = false) {
+		public void Compile(string Src) {
 			//try {
 			AntlrInputStream Input = new AntlrInputStream(Src);
 			VerminLexer Lexer = new VerminLexer(Input);
 			CommonTokenStream Tokens = new CommonTokenStream(Lexer);
 			VerminParser Parser = new VerminParser(Tokens);
-			ParseTreeWalker Walker = new ParseTreeWalker();
+			V.Visit(Parser.prog());
 
-			VerminListener Listener = new VerminListener(R.Gen);
-			Walker.Walk(Listener, Parser.prog());
-
-			if (Dump)
-				R.Gen.Dump();
-			R.Gen.Verify();
-			R.Gen.Compile();
-
+			/*if (Dump)
+				V.Dump();
+			V.Compile();*/
 			/*} catch (Exception E) {
 				Console.WriteLine(E.Message);
 			}//*/

@@ -12,23 +12,22 @@ namespace Test {
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		delegate int FncDel(int A, int B, int C);
 
-		static Compiler C;
+		static Runtime RTime;
 
 		static void Main(string[] args) {
 			Console.Title = "Vermin Test";
-			Runtime R = new Runtime("Module");
+			RTime = new Runtime("Module", true);
 
-			C = new Compiler(R);
-			C.Compile("func Fnc(A, B, C) { return (A + B) * C }");
+			RTime.Compile(@"
+extern func Fnc() {
+	//return (A + B) * C
+	return
+}
+");
 
-			FncDel Fnc = R.GetFunction<FncDel>("Fnc");
-			Console.WriteLine("Result: {0}", Fnc(2, 4, 3));
+			/*FncDel Fnc = RTime.GetFunction<FncDel>("Fnc");
+			Console.WriteLine("Result: {0}", Fnc(2, 4, 3));*/
 
-			/*while (true)
-				Exec(Prompt("> "));//*/
-			//Vermin.Test.Run();
-
-			//Console.WriteLine("Done!");
 			Console.ReadLine();
 			Environment.Exit(0);
 		}
@@ -40,10 +39,6 @@ namespace Test {
 				R = Console.ReadLine().Trim();
 			} while (R.Length == 0);
 			return R;
-		}
-
-		static void Exec(string Str) {
-			C.Compile(Str);
 		}
 	}
 }
