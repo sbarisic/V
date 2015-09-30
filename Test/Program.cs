@@ -4,30 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.IO;
 
 using Vermin;
 
 namespace Test {
 	class Program {
-		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate int FncDel(int A, int B, int C);
-
-		static Runtime RTime;
-
 		static void Main(string[] args) {
 			Console.Title = "Vermin Test";
-			RTime = new Runtime("Module", true);
 
-			RTime.Compile(@"
-extern func Fnc() {
-	//return (A + B) * C
-	return
-}
-");
+			Parser P = new Parser();
+			P.Parse(File.ReadAllText("Test.v"));
 
-			/*FncDel Fnc = RTime.GetFunction<FncDel>("Fnc");
-			Console.WriteLine("Result: {0}", Fnc(2, 4, 3));*/
-
+			Console.WriteLine("Done!");
 			Console.ReadLine();
 			Environment.Exit(0);
 		}
