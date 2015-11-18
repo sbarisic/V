@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vermin", "Vermin\Vermin.csproj", "{D8E14ACF-2131-40AD-8C2C-F3CE123C67D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V", "V\V.csproj", "{D8E14ACF-2131-40AD-8C2C-F3CE123C67D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{092BDB5C-80D0-47C3-A9A0-31A4C6393589}"
 EndProject

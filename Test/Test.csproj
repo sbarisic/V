@@ -51,9 +51,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Vermin\Vermin.csproj">
+    <ProjectReference Include="..\Vermin\V.csproj">
       <Project>{d8e14acf-2131-40ad-8c2c-f3ce123c67d1}</Project>
-      <Name>Vermin</Name>
+      <Name>V</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

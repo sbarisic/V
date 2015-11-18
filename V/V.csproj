@@ -7,8 +7,8 @@
     <ProjectGuid>{D8E14ACF-2131-40AD-8C2C-F3CE123C67D1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Vermin</RootNamespace>
-    <AssemblyName>Vermin</AssemblyName>
+    <RootNamespace>V</RootNamespace>
+    <AssemblyName>V</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
