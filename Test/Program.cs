@@ -14,7 +14,11 @@ namespace Test {
 			Console.Title = "Vermin Test";
 
 			Parser P = new Parser();
-			P.Parse(File.ReadAllText("Test.v"));
+			//P.Parse(File.ReadAllText("Test.v"));
+
+			while (true) {
+				P.Parse(Prompt(">> "));
+			}
 
 			Console.WriteLine("Done!");
 			Console.ReadLine();

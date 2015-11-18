@@ -12,7 +12,7 @@ namespace Vermin {
 		}
 
 		public void Parse(string Src) {
-
+			Console.WriteLine(Src);
 		}
 	}
 }
