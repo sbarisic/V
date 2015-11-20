@@ -11,7 +11,7 @@ using Vermin;
 namespace Test {
 	class Program {
 		static void Main(string[] args) {
-			Console.Title = "Vermin Test";
+			Console.Title = "V Test";
 
 			Parser P = new Parser();
 			//P.Parse(File.ReadAllText("Test.v"));
