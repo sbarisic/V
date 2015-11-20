@@ -545,7 +545,7 @@ namespace System.Text {
 			} else {
 				string val = GetBufferValue(0);
 				decimal decimalVal;
-				if (decimal.TryParse(val, out decimalVal)) {
+				if (decimal.TryParse(val, NumberStyles.Any, settings.CultureInfo, out decimalVal)) {
 					return new Token(TokenType.Decimal, decimalVal, GetTokenText(), 0, start, position, lineBegin, lineNumber, lineBegin, lineNumber);
 				} else {
 					return new Token(TokenType.Number, val, GetTokenText(), 0, start, position, lineBegin, lineNumber, lineBegin, lineNumber);
@@ -866,6 +866,7 @@ namespace System.Text {
 	}
 
 	public enum TokenType {
+		NullToken,
 		Char,
 		Symbol,
 		Number,
@@ -900,6 +901,8 @@ namespace System.Text {
 	}
 
 	public sealed class Token {
+		public static readonly Token Null = new Token(TokenType.NullToken, null, "", 0, 0, 0, 0, 0, 0, 0);
+
 		public readonly TokenType Type;
 		public readonly object Value;
 		public readonly string Text;
@@ -935,6 +938,13 @@ namespace System.Text {
 				return EndPosition - EndLineBegin;
 			}
 		}
+
+		public override string ToString() {
+			string TokenString = string.Format("({0}){1}", Id, Type);
+			TokenString += new string(' ', 17 - TokenString.Length) + string.Format("`{0}´", Text);
+			TokenString += new string(' ', 50 - TokenString.Length) + Value.GetType().Name;
+			return TokenString;
+		}
 	}
 
 	public sealed class LexerSettings : ICloneable {
@@ -965,7 +975,7 @@ namespace System.Text {
 				settings.Options = LexerOptions.IdentIgnoreCase | LexerOptions.StringDoubleQuote;
 				settings.StringQuotes = new char[] { '\"', '\'' };
 				settings.StringEscapeChar = '\\';
-				settings.InlineComments = new string[] { "--" };
+				settings.InlineComments = new string[] { "//" };
 				settings.CommentBegin = "/*";
 				settings.CommentEnd = "*/";
 

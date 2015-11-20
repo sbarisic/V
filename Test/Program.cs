@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.IO;
 
-using Vermin;
+using V;
 
 namespace Test {
 	class Program {
@@ -14,11 +14,11 @@ namespace Test {
 			Console.Title = "V Test";
 
 			Parser P = new Parser();
-			//P.Parse(File.ReadAllText("Test.v"));
+			P.Parse(File.ReadAllText("Test.v"));
 
-			while (true) {
+			/*while (true) {
 				P.Parse(Prompt(">> "));
-			}
+			}*/
 
 			Console.WriteLine("Done!");
 			Console.ReadLine();

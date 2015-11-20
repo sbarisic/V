@@ -1,3 +1,1 @@
-﻿int main() {
-	return 0;
-}
+﻿"test" 124 2123.212 2f
